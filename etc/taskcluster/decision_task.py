@@ -57,7 +57,7 @@ def tasks(task_for):
 
             "try-mac": [macos_unit],
             "try-linux": [linux_tidy_unit, linux_docs_check, linux_release],
-            "try-windows": [windows_unit, windows_arm64, windows_uwp_x64],
+            "try-windows": [windows_unit],
             "try-arm": [windows_arm64],
             "try-wpt": [linux_wpt],
             "try-wpt-2020": [linux_wpt_layout_2020],
@@ -372,15 +372,14 @@ def windows_unit(cached=True, rdp=False):
         .with_script(
             # Not necessary as this would be done at the start of `build`,
             # but this allows timing it separately.
-            "mach fetch",
+            "python mach fetch",
 
-            "mach build --dev",
+            "python mach build --dev",
 
-            "mach test-unit",
-            "mach smoketest --angle",
+            "python mach smoketest --angle",
 
-            "mach package --dev",
-            "mach build --dev --libsimpleservo",
+            "python mach package --dev",
+            "python mach build --dev --libsimpleservo",
             # The GStreamer plugin currently doesn't support Windows
             # https://github.com/servo/servo/issues/25353
             # "mach build --dev -p servo-gst-plugin",
