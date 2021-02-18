@@ -21,6 +21,8 @@ jobs:
   build-win:
     name: Build (Windows)
     runs-on: windows-2019
+    env:
+      CARGO_HOME: ${{ env.GITHUB_WORKSPACE }}\..\.cargo
     steps:
       - uses: actions/checkout@v2
         with:
