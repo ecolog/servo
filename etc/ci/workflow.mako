@@ -22,11 +22,13 @@ jobs:
     name: Build (Windows)
     runs-on: windows-2019
     env:
-      CARGO_HOME: ${{ env.GITHUB_WORKSPACE }}\..\.cargo
+      CARGO_HOME: ${ GITHUB_WORKSPACE }\..\.cargo
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
+      - name: Check
+        run: echo %CARGO_HOME%
       - name: Bootstrap
         run: |
           python -m pip install --upgrade pip virtualenv
