@@ -15,7 +15,7 @@ on:
 
 env:
   RUST_BACKTRACE: 1
-  SHELL: /bin/bash
+  #SHELL: /bin/bash
 
 jobs:
   build-win:
@@ -30,7 +30,7 @@ jobs:
       #    python etc\ci\generate_workflow.py
       #    git diff --numstat | find /c /v ""
       - name: Check
-        run: echo %CARGO_HOME%
+        run: echo ${ CARGO_HOME }
         env:
           CARGO_HOME: ${ GITHUB_WORKSPACE }\..\.cargo
       - name: Bootstrap

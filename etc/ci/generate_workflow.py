@@ -49,7 +49,8 @@ def main():
         f.write(render(
             'workflow.mako',
             total_chunks=20,
-            GITHUB_WORKSPACE="${{ env.GITHUB_WORKSPACE }}",
+            GITHUB_WORKSPACE="${{ github.workspace }}",
+            CARGO_HOME="${{ env.CARGO_HOME }}",
         ))
 
 

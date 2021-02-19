@@ -15,7 +15,7 @@ on:
 
 env:
   RUST_BACKTRACE: 1
-  SHELL: /bin/bash
+  #SHELL: /bin/bash
 
 jobs:
   build-win:
@@ -30,23 +30,23 @@ jobs:
       #    python etc\ci\generate_workflow.py
       #    git diff --numstat | find /c /v ""
       - name: Check
-        run: echo %CARGO_HOME%
+        run: echo ${{ env.CARGO_HOME }}
         env:
-          CARGO_HOME: ${{ env.GITHUB_WORKSPACE }}\..\.cargo
+          CARGO_HOME: ${{ github.workspace }}\..\.cargo
       - name: Bootstrap
         run: |
           python -m pip install --upgrade pip virtualenv
           python mach fetch
         env:
-          CARGO_HOME: ${{ env.GITHUB_WORKSPACE }}\..\.cargo
+          CARGO_HOME: ${{ github.workspace }}\..\.cargo
       - name: Release build
         run: python mach build --release --media-stack=dummy
         env:
-          CARGO_HOME: ${{ env.GITHUB_WORKSPACE }}\..\.cargo
+          CARGO_HOME: ${{ github.workspace }}\..\.cargo
       - name: Unit tests
         run: python mach test-unit
         env:
-          CARGO_HOME: ${{ env.GITHUB_WORKSPACE }}\..\.cargo
+          CARGO_HOME: ${{ github.workspace }}\..\.cargo
       - name: Smoketest
         run: python mach smoketest --angle
 
