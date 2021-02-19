@@ -21,22 +21,32 @@ jobs:
   build-win:
     name: Build (Windows)
     runs-on: windows-2019
-    env:
-      CARGO_HOME: ${ GITHUB_WORKSPACE }\..\.cargo
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
+      #- name: Check workflow
+      #  run: |
+      #    python etc\ci\generate_workflow.py
+      #    git diff --numstat | find /c /v ""
       - name: Check
         run: echo %CARGO_HOME%
+        env:
+          CARGO_HOME: ${ GITHUB_WORKSPACE }\..\.cargo
       - name: Bootstrap
         run: |
           python -m pip install --upgrade pip virtualenv
           python mach fetch
+        env:
+          CARGO_HOME: ${ GITHUB_WORKSPACE }\..\.cargo
       - name: Release build
         run: python mach build --release --media-stack=dummy
+        env:
+          CARGO_HOME: ${ GITHUB_WORKSPACE }\..\.cargo
       - name: Unit tests
         run: python mach test-unit
+        env:
+          CARGO_HOME: ${ GITHUB_WORKSPACE }\..\.cargo
       - name: Smoketest
         run: python mach smoketest --angle
 
